@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Tache Time Management</title>
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/skeleton.css" media="all">
+	</head>
+	<body>
+		<header>
+			<h1 id="logo"><a href="projects.html">Tache</a></h1>
+			<div id="login">
+				<a href="index.html"><input type="submit" id="logout" value="Logout"></a>
+			</div>
+		</header>
+		<div>
+			<h1 id="projects">Add Project</h1>
+		</div>
+		
+		<div id="wrapper">
+			<aside>
+				<a href="addproject.html"><img src="images/add.svg"></a>
+				<h3><a href="addproject.html">Add Project</a></h4>
+				<a href="account.html"><img src="images/account_info.svg"></a>
+				<h3><a href="account.html">Account Info</a></h4>
+				<a href="clients.html"><img src="images/clients.svg"></a>
+				<h3><a href="clients.html">Clients</a></h4>
+			</aside>
+			<div id="addproject">
+				<form>
+					<fieldset>
+						<div id="name" class="add">
+							<label for="project_name">Project Name:</label>
+							 <input type="text" name="name" id="project_name" placeholder="Project Name">
+						</div>
+						
+							<div id="add_description">
+								<label id="description_label" for="text_description">Project Description:</label> 
+								<textarea rows="8" cols="40" id="text_description"></textarea>
+							</div>
+						
+						<div id="date" class="add">
+							<label for="project_date">Project Date:</label> 
+							<input type="text" name="name" id="project_date" placeholder="Click for Date" class="add_input">
+						</div>
+						<div id="time" class="add">
+							<label for="project_time">Project Time:</label>
+							 <input type="text" name="name" id="project_time" placeholder="Project Time" class="add_input">
+						</div>
+						<div id="location" class="add">
+							<label for="project_location">Project Location:</label>
+							<input type="text" name="name" id="project_location" placeholder="Project Location" class="add_input">
+						</div>
+					</fieldset>
+				</form>
+				<ul>
+					<li>Status:</li>
+					<li id="red">Urgent</li>
+					<li id="blue">Active</li>
+					<li id="white">Delayed</li>
+					<li id="green">Complete</li>
+				</ul>
+
+
+
+
+				<form>
+					<fieldset>
+						<div id="name" class="add">
+							<label for="project_name">Task Name:</label>
+							 <input type="text" name="name" id="project_name" placeholder="Task Name">
+						</div>
+						
+							<div id="add_description">
+								<label id="description_label" for="text_description">Task Description:</label> 
+								<textarea rows="8" cols="40" id="second_text_description"></textarea>
+							</div>
+						
+						<div id="date" class="add">
+							<label for="project_date">Task Date:</label> 
+							<input type="text" name="name" id="project_date" placeholder="Click for Date" class="add_input">
+						</div>
+						<div id="time" class="add">
+							<label for="project_time">Task Time:</label>
+							 <input type="text" name="name" id="project_time" placeholder="Task Time" class="add_input">
+						</div>
+						<div id="location" class="add">
+							<label for="project_location">Task Location:</label>
+							<input type="text" name="name" id="project_location" placeholder="Task Location" class="add_input">
+						</div>
+					</fieldset>
+				</form>
+				<ul>
+					<li>Status:</li>
+					<li id="red">Urgent</li>
+					<li id="blue">Active</li>
+					<li id="white">Delayed</li>
+					<li id="green">Complete</li>
+				</ul>
+				<p>Add Another Task</p>
+				<input type="submit" value="Add Project" id="button" />
+			</div>
+		</div>

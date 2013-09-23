@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Tache Time Management</title>
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/skeleton.css" media="all">
+	</head>
+	<body>
+		<header>
+			<h1 id="logo"><a href="projects.html">Tache</a></h1>
+			<div id="login">
+				<a href="index.html"><input type="submit" id="logout" value="Logout"></a>
+			</div>
+		</header>
+		<div>
+			<h1 id="projects">Account Info</h1>
+		</div>
+		
+		<div id="wrapper">
+			<aside>
+				<a href="addproject.html"><img src="images/add.svg"></a>
+				<h3><a href="addproject.html">Add Project</a></h4>
+				<a href="account.html"><img src="images/account_info.svg"></a>
+				<h3><a href="account.html">Account Info</a></h4>
+				<a href="clients.html"><img src="images/clients.svg"></a>
+				<h3><a href="clients.html">Clients</a></h4>
+			</aside>
+			<div id="accountinfo">
+				<form>
+					<fieldset>
+						<div id="full_name" class="account">
+							<label for="project_name">Full Name:</label>
+							 <input type="text" name="name" id="project_name" placeholder="John Doe">
+						</div>
+						<div id="email" class="account">
+							<label for="project_name">Email:</label>
+							 <input type="text" name="name" id="project_name" placeholder="JohnDoe@yahoo.com">
+						</div>
+						<div id="username" class="account">
+							<label for="project_date">Username:</label> 
+							<input type="text" name="name" id="project_date" placeholder="Enter Username" class="add_input">
+						</div>
+						<div id="password" class="account">
+							<label for="project_time">Password:</label>
+							 <input type="text" name="name" id="project_time" placeholder="Enter Password" class="add_input">
+						</div>
+						<div id="retype" class="account">
+							<label for="project_location">Retype Password:</label>
+							<input type="text" name="name" id="project_location" placeholder="Retype Password" class="add_input">
+						</div>
+					</fieldset>
+				</form>
+	
+				<a href="projects.html"><input type="submit" value="Save Changes" id="savebutton" /></a>
+			</div>
+		</div>
