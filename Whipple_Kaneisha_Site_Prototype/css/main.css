@@ -443,6 +443,9 @@ ul li{
 	margin-bottom: 10px;
 	height: 20px;
 }
+#edit_task{
+	margin-left: 30px;
+}
 
 #edit_task_dates{
 	margin-left: 90px;

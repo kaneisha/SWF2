@@ -82,7 +82,7 @@ var pass = $('#username_pwd').val();
 	});
 };
 
-//--------------Register-------------------
+//------------------------------------------Register------------------------------------------------//
 var register = function(){
 
 var user = $('#register_username').val();
@@ -114,7 +114,7 @@ var email = $('#register_email').val();
 
 checkLogin();
 
-//-----------Logout--------------------
+//----------------------------------------------Logout---------------------------------------------//
 
 	
 var logout = function(){
@@ -125,7 +125,7 @@ var logout = function(){
 };
 
 
-//-----------------Get Project----------------//
+//----------------------------------------------Get Project------------------------------------------//
 	
 var get_projects = function(){
 	console.log('run');
@@ -159,9 +159,6 @@ var get_projects = function(){
 
 
 
-
-
-
 	})
 
 	
@@ -183,17 +180,24 @@ var loadApp = function(){
 			logout();
 	});
 
-		$('#view_tasks').on('click', function(e){
-			console.log("clicked");
+		$(document).on('click', '#view_tasks', function(e){
+			//console.log("clicked");
 			var projectid = ($(this).attr("data-id"));
 			e.preventDefault();
 			loadTasks(projectid);
 		})
 
 		$('#add_icon').on('click', function(e){
-			console.log("clicked");
+			//console.log("clicked");
 			e.preventDefault();
 			loadAddProject();
+		})
+
+		$(document).on('click', '#edit', function(e){
+			//console.log("clicked");
+			var editProjectID = ($(this).attr("data-projectid"));
+			e.preventDefault();
+			loadEditProject(editProjectID);
 		})
 
 
@@ -201,7 +205,7 @@ var loadApp = function(){
 	get_projects();
 };
 
-//--------------------Tasks Page-----------------------------//
+//--------------------------------------------Tasks Page--------------------------------------------//
 
 var get_tasks = function(projectid){
 	console.log('run');
@@ -266,7 +270,7 @@ var loadTasks = function(projectid){
 	get_tasks(projectid);
 };
 
-//--------------------Add Project------------------------//
+//----------------------------------Add Project-----------------------------------------//
 
 var loadAddProject = function(){
 	var status;
@@ -281,9 +285,19 @@ var loadAddProject = function(){
 		$('#wrap').append(html);
 
 		$('.clickable').on('click', function(e){
+			console.log('status click')
 			e.preventDefault();
 			status = $(this).html();
 		});
+
+
+				$(function() {
+				$( "#datepicker" ).datepicker({
+				changeMonth: true,
+				changeYear: true
+				});
+				});
+			
 
 
 		$('#button').on('click', function(e){
@@ -340,10 +354,74 @@ console.log(status);
 	return false;
 };
 
+//--------------------------Update Project-------------------------------------------//
+var loadEditProject = function(editProjectID){
+	$('#wrap').empty();
+	$.get('templates/template.html',function(htmlArg){
+		var edit_project = $(htmlArg).find('#edit_project').html();
+		$.template('editproject', edit_project);
+
+		var html = $.render('', 'editproject');
+
+		$('#wrap').append(html);
+
+		$('#logout').on('click', function(e){
+			//console.log('clicker');
+			e.preventDefault();
+			logout();
+	});
+
+		console.log(editProjectID);
+
+
+	});
+	update_project(editProjectID);
+};
+
+
+var update_project = function(editProjectID){
+	console.log('runner');
+	console.log(editProjectID);
+
+	// $.get('templates/template.html', function(htmlArg){
+	// 	var project_edit = $(htmlArg).find('#task_item').html();
+	// 	$.template('taskitem', task_item);
+
+		$(document).on('click', '#add_icon', function(e){
+			//console.log("clicked");
+			e.preventDefault();
+			loadAddProject();
+		})
+
+
+		$.ajax({
+			url: 'xhr/update_project.php',
+			data: {
+				projectID: editProjectID
+			},
+			type: 'post',
+			dataType: 'json',
+			success: function(response){
+				console.log(response);
+
+				if(response){
+					console.log(response);
+					//loadApp();
+					// var tasks = response.tasks;
+					// var html = $.render(tasks, 'taskitem');
+
+					// $('#wrapper').append(html);
+				}else{
+					console.log('could not update project');
+
+				}
+			}
+				//return false;
+		//});
 
 
 
 
+	});
 
-
-//jdbenitez@fullsail.com
+	};
