@@ -14,7 +14,7 @@ checkLoggedIn();
 $updata = array();
 
 $updata["id"] = $_SESSION["user"];
-$updata["password"] = param($_POST, 'password', '');
+$updata["user_p"] = param($_POST, 'password', '');
 $updata["email"] = param($_POST, 'email', '');
 $updata["first_name"] = param($_POST, 'first_name', '');
 $updata["last_name"] = param($_POST, 'last_name', '');

@@ -1,3 +1,28 @@
+var user ;
+var project ;
+var task ;
+
+
+var checkLogin = function(){
+	$.ajax({
+		url:'xhr/check_login.php',
+		type: 'get',
+		dataType: 'json',
+		success: function(r){
+			if(r.user){
+				console.log('user exists');
+				user = r.user;
+				loadApp();
+			}else{
+				console.log('go home');
+				loadLanding();
+			}
+		}
+	});
+};
+
+checkLogin();
+
 var loadLanding = function(){
 	$('#wrap').empty();
 	$.get('templates/template.html',function(htmlArg){
@@ -24,30 +49,11 @@ var loadLanding = function(){
 	});
 };
 
-loadLanding();
-
-var checkLogin = function(){
-	$.ajax({
-		url:'xhr/check_login.php',
-		type: 'get',
-		dataType: 'json',
-		success: function(r){
-			if(r.user){
-				console.log('user exists');
-				//loadApp();
-			}else{
-				console.log('go home');
-				//loadLanding();
-			}
-		}
-	});
-}
-
-
 var login = function(){
 
-var user = $('#username_login').val();
-var pass = $('#username_pwd').val();
+	var user = $('#username_login').val();
+	var pass = $('#username_pwd').val();
+
 	$.ajax({
 		url: 'xhr/login.php',
 		data: {
@@ -85,9 +91,9 @@ var pass = $('#username_pwd').val();
 //------------------------------------------Register------------------------------------------------//
 var register = function(){
 
-var user = $('#register_username').val();
-var pass = $('#register_pwd').val();
-var email = $('#register_email').val();
+	var user = $('#register_username').val();
+	var pass = $('#register_pwd').val();
+	var email = $('#register_email').val();
 	$.ajax({
 		url: 'xhr/register.php',
 		data: {
@@ -112,8 +118,6 @@ var email = $('#register_email').val();
 	return false;
 };
 
-checkLogin();
-
 //----------------------------------------------Logout---------------------------------------------//
 
 	
@@ -134,8 +138,6 @@ var get_projects = function(){
 		var project_item = $(htmlArg).find('#project_item').html();
 		$.template('projectitem', project_item);
 
-
-
 		$.ajax({
 			url: 'xhr/get_projects.php',
 			type: 'get',
@@ -148,7 +150,7 @@ var get_projects = function(){
 					var projects = response.projects;
 					var html = $.render(projects, 'projectitem');
 
-					$('#wrapper').append(html);
+					$('#wrapperTwo').append(html);
 				}else{
 					console.log('could not get projects');
 
@@ -178,11 +180,12 @@ var loadApp = function(){
 			//console.log('clicker');
 			e.preventDefault();
 			logout();
-	});
+		});
 
 		$(document).on('click', '#view_tasks', function(e){
 			//console.log("clicked");
 			var projectid = ($(this).attr("data-id"));
+			//project.id = editProjectID;
 			e.preventDefault();
 			loadTasks(projectid);
 		})
@@ -196,8 +199,14 @@ var loadApp = function(){
 		$(document).on('click', '#edit', function(e){
 			//console.log("clicked");
 			var editProjectID = ($(this).attr("data-projectid"));
+			//project.id = editProjectID;
 			e.preventDefault();
 			loadEditProject(editProjectID);
+		})
+
+		$(document).on('click', '#account_icon', function(e){
+			e.preventDefault();
+			loadAccount();
 		})
 
 
@@ -207,18 +216,18 @@ var loadApp = function(){
 
 //--------------------------------------------Tasks Page--------------------------------------------//
 
-var get_tasks = function(projectid){
+var get_tasks = function(editProjectID){
 	console.log('run');
 
 	$.get('templates/template.html', function(htmlArg){
 		var task_item = $(htmlArg).find('#task_item').html();
 		$.template('taskitem', task_item);
 
-
+		console.log(editProjectID);
 		$.ajax({
 			url: 'xhr/get_tasks.php',
 			data: {
-				projectID: projectid
+				projectID: editProjectID
 			},
 			type: 'get',
 			dataType: 'json',
@@ -265,8 +274,15 @@ var loadTasks = function(projectid){
 			logout();
 	});
 
+		$(document).on('click', '#task_edit', function(e){
+			e.preventDefault();
+			var editTask = ($(this).attr("data-taskid"));
+			loadEditTasks(editTask);
+		})
+
 
 	});
+	console.log(projectid);
 	get_tasks(projectid);
 };
 
@@ -354,7 +370,7 @@ console.log(status);
 	return false;
 };
 
-//--------------------------Update Project-------------------------------------------//
+//------------------------------------------------Update Project----------------------------------------------------------//
 var loadEditProject = function(editProjectID){
 	$('#wrap').empty();
 	$.get('templates/template.html',function(htmlArg){
@@ -364,18 +380,31 @@ var loadEditProject = function(editProjectID){
 		var html = $.render('', 'editproject');
 
 		$('#wrap').append(html);
+			
+		$(function() {
+			$( "#datepicker" ).datepicker({
+				changeMonth: true,
+				changeYear: true
+			});
+		});
+			
 
 		$('#logout').on('click', function(e){
 			//console.log('clicker');
 			e.preventDefault();
 			logout();
-	});
+		});
+
+		$('#confirm').click(function(){
+			update_project(editProjectID);
+
+		});
 
 		console.log(editProjectID);
 
 
 	});
-	update_project(editProjectID);
+	
 };
 
 
@@ -383,9 +412,6 @@ var update_project = function(editProjectID){
 	console.log('runner');
 	console.log(editProjectID);
 
-	// $.get('templates/template.html', function(htmlArg){
-	// 	var project_edit = $(htmlArg).find('#task_item').html();
-	// 	$.template('taskitem', task_item);
 
 		$(document).on('click', '#add_icon', function(e){
 			//console.log("clicked");
@@ -393,11 +419,24 @@ var update_project = function(editProjectID){
 			loadAddProject();
 		})
 
+			$(document).on('click', '#confirm', function(e){
+			//console.log("clicked");
+			e.preventDefault();
+			loadApp();
+		})
+
+		var name = $('#edit_task_name').val();
+		var descrip = $('#edit_task_description').val();
+		var date = $('#datepicker').val();
+
 
 		$.ajax({
 			url: 'xhr/update_project.php',
 			data: {
-				projectID: editProjectID
+				projectID: editProjectID,
+				projectName: name,
+				projectDescription: descrip,
+				updatedDate: date
 			},
 			type: 'post',
 			dataType: 'json',
@@ -405,7 +444,7 @@ var update_project = function(editProjectID){
 				console.log(response);
 
 				if(response){
-					console.log(response);
+					console.log('updated project');
 					//loadApp();
 					// var tasks = response.tasks;
 					// var html = $.render(tasks, 'taskitem');
@@ -425,3 +464,141 @@ var update_project = function(editProjectID){
 	});
 
 	};
+
+//----------------------------------------------------Account Info-----------------------------------------------------------------//
+var loadAccount = function(){
+	$('#wrap').empty();
+	$.get('templates/template.html',function(htmlArg){
+		var account = $(htmlArg).find('#account-template').html();
+		$.template('accounttemplate', account);
+
+		var html = $.render('', 'accounttemplate');
+
+		$('#wrap').append(html);
+
+		$('#logout').on('click', function(e){
+			//console.log('clicker');
+			e.preventDefault();
+			logout();
+	});
+
+
+		$('#add_icon').on('click', function(e){
+			//console.log("clicked");
+			e.preventDefault();
+			loadAddProject();
+		})
+
+		$('#savebutton').on('click', function(e){
+			e.preventDefault();
+			edit_account();
+			//loadApp;
+		})
+
+
+
+	});
+	//account();
+};
+
+
+
+
+var edit_account = function(){
+var name = $('#full_name').val();
+var email = $('#user_email').val();
+var pass = $('#user_password').val();
+	$.ajax({
+		url: 'xhr/update_user.php',
+		data: {
+			first_name: name,
+			email: email,
+			password: pass
+		},
+		type: 'post',
+		dataType: 'json',
+		success: function(response){
+			if(response.error){
+				//console.log(response);
+				console.log('could not update user');
+				//get_projects();
+				
+
+			}else{
+				console.log('edit account');
+				loadApp();
+
+			}
+		}
+			//return false;
+	});
+};
+
+//----------------------------------------------------Update Task-----------------------------------------------------------------//
+var loadEditTasks = function(editTask){
+	$('#wrap').empty();
+	$.get('templates/template.html',function(htmlArg){
+		var updateTask = $(htmlArg).find('#update_task').html();
+		$.template('updatetask', updateTask);
+
+		var html = $.render('', 'updatetask');
+
+		$('#wrap').append(html);
+
+		$('#logout').on('click', function(e){
+			//console.log('clicker');
+			e.preventDefault();
+			logout();
+	});
+
+
+		$('#add_icon').on('click', function(e){
+			//console.log("clicked");
+			e.preventDefault();
+			loadAddProject();
+		})
+
+		$('#confirm_task').on('click', function(e){
+			e.preventDefault();
+			edit_task(editTask);
+			//loadApp;
+		})
+
+
+
+	});
+	
+};
+
+
+var edit_task = function(editTask){
+
+var name = $('#edit_task_name').val();
+var descrip = $('#edit_task_description').val();
+
+	$.ajax({
+		url: 'xhr/update_task.php',
+		data: {
+			taskID: editTask,
+			taskName: name,
+			taskDescription: descrip
+		},
+		type: 'post',
+		dataType: 'json',
+		success: function(response){
+			if(response){
+				console.log(response);
+				console.log('edited account');
+				//get_projects();
+		
+				loadApp();
+
+			}else{
+				console.log('could not update user');
+			
+
+			}
+		}
+			//return false;
+	});
+};
