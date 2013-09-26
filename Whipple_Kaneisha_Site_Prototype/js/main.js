@@ -208,8 +208,11 @@ var loadApp = function() {
 			e.preventDefault();
 			loadAccount();
 		});
+
+		get_projects();
+
 	});
-	get_projects();
+
 };
 
 //--------------------------------------------Tasks Page--------------------------------------------//
