@@ -164,7 +164,7 @@ var get_projects = function() {
 
 var loadApp = function() {
 	$('#wrap').empty();
-	$.get('templates/template.html?2', function(htmlArg) {
+	$.get('templates/template.html?4', function(htmlArg) {
 
 		appTemplate = htmlArg;
 
