@@ -271,7 +271,7 @@ var loadTasks = function(projectid) {
 		});
 	});
 	console.log(projectid);
-	get_tasks(taskID);
+	get_tasks(projectid);
 };
 
 //----------------------------------Add Project-----------------------------------------//
