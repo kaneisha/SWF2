@@ -136,32 +136,30 @@ var logout = function() {
 var get_projects = function() {
 	console.log('run');
 
-	$.get('templates/template.html', function(htmlArg) {
-		var project_item = $(htmlArg).find('#project_item').html();
-		$.template('projectitem', project_item);
+	var project_item = $(htmlArg).find('#project_item').html();
+	$.template('projectitem', project_item);
 
-		$.ajax({
-			url : 'xhr/get_projects.php',
-			type : 'get',
-			dataType : 'json',
-			success : function(response) {
-				console.log(response);
+	$.ajax({
+		url : 'xhr/get_projects.php',
+		type : 'get',
+		dataType : 'json',
+		success : function(response) {
+			console.log(response);
 
-				if (response) {
-					//loadApp();
-					var projects = response.projects;
-					var html = $.render(projects, 'projectitem');
+			if (response) {
+				//loadApp();
+				var projects = response.projects;
+				var html = $.render(projects, 'projectitem');
 
-					$('#wrapperTwo').append(html);
-				} else {
-					console.log('could not get projects');
+				$('#wrapperTwo').append(html);
+			} else {
+				console.log('could not get projects');
 
-				}
 			}
-			//return false;
-		});
-
+		}
+		//return false;
 	});
+
 };
 
 var loadApp = function() {
