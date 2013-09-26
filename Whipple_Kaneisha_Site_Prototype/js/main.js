@@ -581,6 +581,7 @@ var edit_account = function() {
 //----------------------------------------------------Update Task-----------------------------------------------------------------//
 
 var loadEditTasks = function(editTask) {
+	
 	$('#wrap').empty();
 	var updateTask = $(appTemplate).find('#update_task').html();
 	$.template('updatetask', updateTask);
