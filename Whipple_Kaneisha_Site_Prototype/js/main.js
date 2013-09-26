@@ -2,6 +2,9 @@ var user;
 var project;
 var task;
 
+var landingTemplate;
+var appTemplate;
+
 var checkLogin = function() {
 	$.ajax({
 		url : 'xhr/check_login.php',
@@ -25,6 +28,9 @@ checkLogin();
 var loadLanding = function() {
 	$('#wrap').empty();
 	$.get('templates/template.html', function(htmlArg) {
+
+		landingTemplate = htmlArg;
+
 		var landing = $(htmlArg).find('#landing-template').html();
 		$.template('landingtemplate', landing);
 
@@ -160,7 +166,10 @@ var get_projects = function() {
 
 var loadApp = function() {
 	$('#wrap').empty();
-	$.get('templates/template.html', function(htmlArg) {
+	$.get('templates/template.html?2', function(htmlArg) {
+
+		appTemplate = htmlArg;
+
 		var app = $(htmlArg).find('#app-template').html();
 		$.template('apptemplate', app);
 
@@ -209,66 +218,61 @@ var loadApp = function() {
 var get_tasks = function(editProjectID) {
 	console.log('run');
 
-	$.get('templates/template.html', function(htmlArg) {
-		var task_item = $(htmlArg).find('#task_item').html();
-		$.template('taskitem', task_item);
+	var task_item = $(appTemplate).find('#task_item').html();
+	$.template('taskitem', task_item);
 
-		console.log(editProjectID);
-		$.ajax({
-			url : 'xhr/get_tasks.php',
-			data : {
-				projectID : editProjectID
-			},
-			type : 'get',
-			dataType : 'json',
-			success : function(response) {
-				console.log(response);
+	console.log(editProjectID);
+	$.ajax({
+		url : 'xhr/get_tasks.php',
+		data : {
+			projectID : editProjectID
+		},
+		type : 'get',
+		dataType : 'json',
+		success : function(response) {
+			console.log(response);
 
-				if (response) {
-					//loadApp();
-					var tasks = response.tasks;
-					var html = $.render(tasks, 'taskitem');
+			if (response) {
+				//loadApp();
+				var tasks = response.tasks;
+				var html = $.render(tasks, 'taskitem');
 
-					$('#wrapper').append(html);
-				} else {
-					console.log('could not get tasks');
+				$('#wrapper').append(html);
+			} else {
+				console.log('could not get tasks');
 
-				}
 			}
-			//return false;
-		});
-
+		}
+		//return false;
 	});
 };
 
 var loadTasks = function(projectid) {
 	$('#wrap').empty();
-	$.get('templates/template.html?2', function(htmlArg) {
-		var tasks = $(htmlArg).find('#task-template').html();
-		$.template('tasktemplate', tasks);
+	var tasks = $(appTemplate).find('#task-template').html();
+	$.template('tasktemplate', tasks);
 
-		var html = $.render('', 'tasktemplate');
+	var html = $.render('', 'tasktemplate');
 
-		$('#wrap').append(html);
+	$('#wrap').append(html);
 
-		$('#logout').on('click', function(e) {
-			//console.log('clicker');
-			e.preventDefault();
-			logout();
-		});
+	$('#logout').on('click', function(e) {
+		//console.log('clicker');
+		e.preventDefault();
+		logout();
+	});
 
-		$(document).on('click', '#task_edit', function(e) {
-			e.preventDefault();
-			var editTask = ($(this).attr("data-taskid"));
-			loadEditTasks(editTask);
-		});
+	$(document).on('click', '#task_edit', function(e) {
+		e.preventDefault();
+		var editTask = ($(this).attr("data-taskid"));
+		loadEditTasks(editTask);
+	});
 
-		$(document).on('click', '#add_task_icon', function(e) {
-			console.log('clicked');
-			e.preventDefault();
-			var taskID = ($(this).attr("data-addtaskid"));
-			loadAddTask(taskID);
-		});
+	$(document).on('click', '#add_task_icon', function(e) {
+		console.log('clicked');
+		e.preventDefault();
+		var taskID = ($(this).attr("data-addtaskid"));
+		loadAddTask(taskID);
 	});
 	console.log(projectid);
 	get_tasks(projectid);
@@ -279,42 +283,39 @@ var loadTasks = function(projectid) {
 var loadAddProject = function() {
 	var status;
 	$('#wrap').empty();
-	$.get('templates/template.html', function(htmlArg) {
-		var adding_project = $(htmlArg).find('#add_project').html();
-		$.template('addproject', adding_project);
+	var adding_project = $(appTemplate).find('#add_project').html();
+	$.template('addproject', adding_project);
 
-		var html = $.render('', 'addproject');
+	var html = $.render('', 'addproject');
 
-		$('#wrap').append(html);
+	$('#wrap').append(html);
 
-		$('.clickable').on('click', function(e) {
-			console.log('status click');
-			e.preventDefault();
-			status = $(this).html();
+	$('.clickable').on('click', function(e) {
+		console.log('status click');
+		e.preventDefault();
+		status = $(this).html();
+	});
+
+	$(function() {
+		$("#datepicker").datepicker({
+			changeMonth : true,
+			changeYear : true
 		});
+	});
 
-		$(function() {
-			$("#datepicker").datepicker({
-				changeMonth : true,
-				changeYear : true
-			});
-		});
+	$('#button').on('click', function(e) {
+		console.log('clicker');
+		e.preventDefault();
+		//loadApp();
 
-		$('#button').on('click', function(e) {
-			console.log('clicker');
-			e.preventDefault();
-			//loadApp();
+		console.log(status);
+		new_project(status);
+	});
 
-			console.log(status);
-			new_project(status);
-		});
-
-		$('#logout').on('click', function(e) {
-			//console.log('clicker');
-			e.preventDefault();
-			logout();
-		});
-
+	$('#logout').on('click', function(e) {
+		//console.log('clicker');
+		e.preventDefault();
+		logout();
 	});
 
 };
@@ -358,42 +359,39 @@ var new_project = function(status) {
 var loadAddTask = function(taskID) {
 	var status;
 	$('#wrap').empty();
-	$.get('templates/template.html', function(htmlArg) {
-		var adding_task = $(htmlArg).find('#add_task-template').html();
-		$.template('addtask', adding_task);
+	var adding_task = $(appTemplate).find('#add_task-template').html();
+	$.template('addtask', adding_task);
 
-		var html = $.render('', 'addtask');
+	var html = $.render('', 'addtask');
 
-		$('#wrap').append(html);
+	$('#wrap').append(html);
 
-		$('.clickable').on('click', function(e) {
-			console.log('status click');
-			e.preventDefault();
-			status = $(this).html();
+	$('.clickable').on('click', function(e) {
+		console.log('status click');
+		e.preventDefault();
+		status = $(this).html();
+	});
+
+	$(function() {
+		$("#datepicker").datepicker({
+			changeMonth : true,
+			changeYear : true
 		});
+	});
 
-		$(function() {
-			$("#datepicker").datepicker({
-				changeMonth : true,
-				changeYear : true
-			});
-		});
+	$('#task_button').on('click', function(e) {
+		console.log('clicker');
+		e.preventDefault();
+		//loadApp();
 
-		$('#task_button').on('click', function(e) {
-			console.log('clicker');
-			e.preventDefault();
-			//loadApp();
+		console.log(status);
+		new_task(status, taskID);
+	});
 
-			console.log(status);
-			new_task(status, taskID);
-		});
-
-		$('#logout').on('click', function(e) {
-			//console.log('clicker');
-			e.preventDefault();
-			logout();
-		});
-
+	$('#logout').on('click', function(e) {
+		//console.log('clicker');
+		e.preventDefault();
+		logout();
 	});
 
 };
@@ -439,35 +437,32 @@ var new_task = function(status, taskID) {
 
 var loadEditProject = function(editProjectID) {
 	$('#wrap').empty();
-	$.get('templates/template.html', function(htmlArg) {
-		var edit_project = $(htmlArg).find('#edit_project').html();
-		$.template('editproject', edit_project);
+	var edit_project = $(appTemplate).find('#edit_project').html();
+	$.template('editproject', edit_project);
 
-		var html = $.render('', 'editproject');
+	var html = $.render('', 'editproject');
 
-		$('#wrap').append(html);
+	$('#wrap').append(html);
 
-		$(function() {
-			$("#datepicker").datepicker({
-				changeMonth : true,
-				changeYear : true
-			});
+	$(function() {
+		$("#datepicker").datepicker({
+			changeMonth : true,
+			changeYear : true
 		});
+	});
 
-		$('#logout').on('click', function(e) {
-			//console.log('clicker');
-			e.preventDefault();
-			logout();
-		});
+	$('#logout').on('click', function(e) {
+		//console.log('clicker');
+		e.preventDefault();
+		logout();
+	});
 
-		$('#confirm').click(function() {
-			update_project(editProjectID);
-
-		});
-
-		console.log(editProjectID);
+	$('#confirm').click(function() {
+		update_project(editProjectID);
 
 	});
+
+	console.log(editProjectID);
 
 };
 
@@ -526,33 +521,30 @@ var update_project = function(editProjectID) {
 
 var loadAccount = function() {
 	$('#wrap').empty();
-	$.get('templates/template.html', function(htmlArg) {
-		var account = $(htmlArg).find('#account-template').html();
-		$.template('accounttemplate', account);
+	var account = $(appTemplate).find('#account-template').html();
+	$.template('accounttemplate', account);
 
-		var html = $.render('', 'accounttemplate');
+	var html = $.render('', 'accounttemplate');
 
-		$('#wrap').append(html);
+	$('#wrap').append(html);
 
-		$('#logout').on('click', function(e) {
-			//console.log('clicker');
-			e.preventDefault();
-			logout();
-		});
-
-		$('#add_icon').on('click', function(e) {
-			//console.log("clicked");
-			e.preventDefault();
-			loadAddProject();
-		});
-
-		$('#savebutton').on('click', function(e) {
-			e.preventDefault();
-			edit_account();
-			//loadApp;
-		});
+	$('#logout').on('click', function(e) {
+		//console.log('clicker');
+		e.preventDefault();
+		logout();
 	});
-	//account();
+
+	$('#add_icon').on('click', function(e) {
+		//console.log("clicked");
+		e.preventDefault();
+		loadAddProject();
+	});
+
+	$('#savebutton').on('click', function(e) {
+		e.preventDefault();
+		edit_account();
+		//loadApp;
+	});
 };
 
 var edit_account = function() {
@@ -588,31 +580,29 @@ var edit_account = function() {
 
 var loadEditTasks = function(editTask) {
 	$('#wrap').empty();
-	$.get('templates/template.html', function(htmlArg) {
-		var updateTask = $(htmlArg).find('#update_task').html();
-		$.template('updatetask', updateTask);
+	var updateTask = $(appTemplate).find('#update_task').html();
+	$.template('updatetask', updateTask);
 
-		var html = $.render('', 'updatetask');
+	var html = $.render('', 'updatetask');
 
-		$('#wrap').append(html);
+	$('#wrap').append(html);
 
-		$('#logout').on('click', function(e) {
-			//console.log('clicker');
-			e.preventDefault();
-			logout();
-		});
+	$('#logout').on('click', function(e) {
+		//console.log('clicker');
+		e.preventDefault();
+		logout();
+	});
 
-		$('#add_icon').on('click', function(e) {
-			//console.log("clicked");
-			e.preventDefault();
-			loadAddProject();
-		});
+	$('#add_icon').on('click', function(e) {
+		//console.log("clicked");
+		e.preventDefault();
+		loadAddProject();
+	});
 
-		$('#confirm_task').on('click', function(e) {
-			e.preventDefault();
-			edit_task(editTask);
-			//loadApp;
-		});
+	$('#confirm_task').on('click', function(e) {
+		e.preventDefault();
+		edit_task(editTask);
+		//loadApp;
 	});
 
 };
