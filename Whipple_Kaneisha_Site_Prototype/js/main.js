@@ -260,7 +260,7 @@ var get_tasks = function(editProjectID){
 
 var loadTasks = function(projectid){
 	$('#wrap').empty();
-	$.get('templates/template.html',function(htmlArg){
+	$.get('templates/template.html?2',function(htmlArg){
 		var tasks = $(htmlArg).find('#task-template').html();
 		$.template('tasktemplate', tasks);
 
@@ -272,7 +272,7 @@ var loadTasks = function(projectid){
 			//console.log('clicker');
 			e.preventDefault();
 			logout();
-	});
+		});
 
 		$(document).on('click', '#task_edit', function(e){
 			e.preventDefault();
@@ -280,10 +280,17 @@ var loadTasks = function(projectid){
 			loadEditTasks(editTask);
 		})
 
+		$(document).on('click', '#add_task_icon', function(e){
+			console.log('clicked')
+			e.preventDefault();
+			var taskID = ($(this).attr("data-addtaskid"));
+			loadAddTask(taskID);
+		})
+
 
 	});
 	console.log(projectid);
-	get_tasks(projectid);
+	get_tasks(taskID);
 };
 
 //----------------------------------Add Project-----------------------------------------//
@@ -356,6 +363,93 @@ console.log(status);
 		dataType: 'json',
 		success: function(response){
 			if(response.newproject){
+				console.log(response);
+				// loadApp()
+				
+			}else{
+				console.log('project add unsuccessful');
+				//loadLanding();
+			}
+		}
+			//return false;
+	});
+
+	return false;
+};
+
+//-----------------------------------------------------Add Task--------------------------------------------------------------//
+
+var loadAddTask = function(taskID){
+	var status;
+	$('#wrap').empty();
+	$.get('templates/template.html',function(htmlArg){
+		var adding_task = $(htmlArg).find('#add_task-template').html();
+		$.template('addtask', adding_task);
+
+		var html = $.render('', 'addtask');
+
+
+		$('#wrap').append(html);
+
+		$('.clickable').on('click', function(e){
+			console.log('status click')
+			e.preventDefault();
+			status = $(this).html();
+		});
+
+
+				$(function() {
+				$( "#datepicker" ).datepicker({
+				changeMonth: true,
+				changeYear: true
+				});
+				});
+			
+
+
+		$('#task_button').on('click', function(e){
+			console.log('clicker');
+			e.preventDefault();
+			//loadApp();
+
+			console.log(status);
+			new_task(status,taskID);
+		})
+
+		$('#logout').on('click', function(e){
+			//console.log('clicker');
+			e.preventDefault();
+			logout();
+	});
+
+
+	});
+	
+};
+
+var new_task = function(status,taskID){
+
+var name = $('#task_name').val();
+var descrip = $('#second_text_description').val();
+// var status = $('.clickable').on('click', function(e){
+// 	e.preventDefault();
+// 	console.log($(this).html());
+// });
+console.log(status);
+
+	//var email = $('#register_email').val();
+	$.ajax({
+		url: 'xhr/new_task.php',
+		data: {
+			projectID: taskID,
+			taskName: name,
+			taskDescription: descrip,
+			status: status
+		},
+		type: 'post',
+		dataType: 'json',
+		success: function(response){
+			if(response.task){
 				console.log(response);
 				// loadApp()
 				

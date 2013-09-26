@@ -132,8 +132,8 @@
 		
 		<div id="wrapper">
 			<aside>
-				<img src="images/add.svg">
-				<h3>Add Project</h4>
+				<img src="images/add.svg" id="add_task_icon">
+				<h3>Add Task</h3>
 				<img src="images/account_info.svg">
 				<h3>Account Info</h4>
 				<img src="images/clients.svg">
@@ -217,53 +217,79 @@
 				</form>
 				<ul>
 					<li>Status:</li>
-					<li class="clickable" id="red">Urgent</li>
-					<li class="clickable" id="blue">Active</li>
-					<li class="clickable" id="white">Delayed</li>
-					<li class="clickable" id="green">Complete</li>
+					<li class="clickable" class="{{=status}}" id="red">Urgent</li>
+					<li class="clickable" class="{{=status}}" id="blue">Active</li>
+					<li class="clickable" class="{{=status}}" id="white">Delayed</li>
+					<li class="clickable" class="{{=status}}" id="green">Complete</li>
 				</ul>
 
 
 
-
-				<form>
-					<fieldset>
-						<div id="name" class="add">
-							<label for="project_name">Task Name:</label>
-							 <input type="text" name="name" id="project_name" placeholder="Task Name">
-						</div>
-						
-							<div id="add_description">
-								<label id="description_label" for="text_description">Task Description:</label> 
-								<textarea rows="8" cols="40" id="second_text_description"></textarea>
-							</div>
-						
-						<div id="date" class="add">
-							<label for="project_date">Task Date:</label> 
-							<input type="text" name="name" id="project_date" placeholder="Click for Date" class="add_input">
-						</div>
-						<div id="time" class="add">
-							<label for="project_time">Task Time:</label>
-							 <input type="text" name="name" id="project_time" placeholder="Task Time" class="add_input">
-						</div>
-						<div id="location" class="add">
-							<label for="project_location">Task Location:</label>
-							<input type="text" name="name" id="project_location" placeholder="Task Location" class="add_input">
-						</div>
-					</fieldset>
-				</form>
-				<ul>
-					<li>Status:</li>
-					<li id="red">Urgent</li>
-					<li id="blue">Active</li>
-					<li id="white">Delayed</li>
-					<li id="green">Complete</li>
-				</ul>
-				<p>Add Another Task</p>
 				<input type="submit" value="Add Project" id="button" />
 			</div>
 		</div>
 
+	</script>
+
+	<script type="text/template" id="add_task-template">
+		<header>
+			<h1 id="logo"><a href="projects.html">Tache</a></h1>
+			<div id="login">
+				<a href="index.html"><input type="submit" id="logout" value="Logout"></a>
+			</div>
+		</header>
+		<div>
+			<h1 id="projects">Add Project</h1>
+		</div>
+		
+		<div id="wrapper">
+			<aside>
+				<img src="images/add.svg">
+				<h3>Add Project</h4>
+				<img src="images/account_info.svg">
+				<h3>Account Info</h4>
+				<img src="images/clients.svg">
+				<h3>Clients</h4>
+			</aside>
+		<div id="addtask">
+			<form>
+						<fieldset>
+							<div id="name" class="add">
+								<label for="project_name">Task Name:</label>
+								 <input type="text" name="name" id="task_name" placeholder="Task Name">
+							</div>
+							
+								<div id="add_description">
+									<label id="description_label" for="text_description">Task Description:</label> 
+									<textarea rows="8" cols="40" id="second_text_description"></textarea>
+								</div>
+							
+							<div id="date" class="add">
+								<label for="project_date">Task Date:</label> 
+								<input type="text" name="name" id="task_date" placeholder="Click for Date" class="add_input">
+							</div>
+							<div id="time" class="add">
+								<label for="project_time">Task Time:</label>
+								 <input type="text" name="name" id="task_time" placeholder="Task Time" class="add_input">
+							</div>
+							<div id="location" class="add">
+								<label for="project_location">Task Location:</label>
+								<input type="text" name="name" id="task_location" placeholder="Task Location" class="add_input">
+							</div>
+						</fieldset>
+					</form>
+					<ul>
+						<li>Status:</li>
+						<li id="red">Urgent</li>
+						<li id="blue">Active</li>
+						<li id="white">Delayed</li>
+						<li id="green">Complete</li>
+					</ul>
+
+					<input type="submit" value="Add Task" id="task_button" />
+		
+		</div>
+		</div>
 	</script>
 
 	<script type="text/template" id="edit_project">

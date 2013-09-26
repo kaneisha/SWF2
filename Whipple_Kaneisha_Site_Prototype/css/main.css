@@ -194,7 +194,7 @@ a{
 .delayed{
 	color: #e9e9e9;
 }
-.urgent{
+.Urgent{
 	color: #ff0000;
 }
 .complete{
@@ -269,7 +269,7 @@ aside h3{
 	color: #e9e9e9;
 	border-radius: 30px;
 	width: 600px;
-	height: 750px;
+	height: 510px;
 	display: block;
 	margin-right: auto;
 	margin-left: auto;
@@ -296,7 +296,7 @@ fieldset{
 
 .add{
 	clear: both;
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 	overflow: hidden;
 	width: 300px;
 	margin-left: 20px;
@@ -316,7 +316,7 @@ fieldset{
 #text_description,#second_text_description{
 	float: right;
 	clear: both;
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 	overflow: hidden;
 	margin-left: 20px;
 	margin-top: -30px;
@@ -417,6 +417,152 @@ ul li{
 		0px -1px 1px rgba(000,000,000,0.2),
 		0px 1px 0px rgba(255,255,255,0.3);
 }
+
+
+/*-----------------Add Project-------------------------*/
+
+#addtask{
+	background-color: #424242;
+	color: #e9e9e9;
+	border-radius: 30px;
+	width: 600px;
+	height: 510px;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+form{
+	margin-top: 20px;
+}
+
+#addtask p{
+	text-decoration: underline;
+	color: #3299bb;
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
+
+fieldset{
+	border: none;
+}
+
+#name{
+	margin-top: 30px;
+}
+
+.add{
+	clear: both;
+	margin-bottom: 30px;
+	overflow: hidden;
+	width: 300px;
+	margin-left: 20px;
+}
+
+.add label{
+	float: left;
+	text-align: right;
+	/*width: 60%;*/
+}
+
+.add input{
+	float: right;
+}
+
+
+#second_text_description{
+	float: right;
+	clear: both;
+	margin-bottom: 30px;
+	overflow: hidden;
+	margin-left: 20px;
+	margin-top: -30px;
+	margin-right: 118px;
+}
+#description_label{
+	clear: both;
+	margin-bottom: 10px;
+	overflow: hidden;
+	width: 300px;
+	margin-left: 20px;
+	float: left;
+}
+
+ul{
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+ul li{
+	display: inline-block;
+	margin-right: 10px;
+}
+
+#task_button{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	padding: 10px 20px;
+	background: -moz-linear-gradient(
+		top,
+		#f38430 0%,
+		#f38430);
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(#f38430),
+		to(#f38430));
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	border: 0px solid #f38430;
+	-moz-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px -1px 0px rgba(243,132,48,0.7);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px -1px 0px rgba(243,132,48,0.7);
+	box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px -1px 0px rgba(243,132,48,0.7);
+	text-shadow:
+		0px -1px 1px rgba(000,000,000,0.2),
+		0px 1px 0px rgba(255,255,255,0.3);
+	margin-bottom: 10px;
+	float: right;
+	margin-right: 30px;
+}
+
+#task_button:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	padding: 10px 20px;
+	background: -moz-linear-gradient(
+		top,
+		#ff6e07 0%,
+		#f38430);
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(#ff6e07),
+		to(#f38430));
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	border: 0px solid #424242;
+	-moz-box-shadow:
+		0px 0px 0px rgba(243,132,48,0.5),
+		inset 0px -1px 0px rgba(243,132,48,0.7);
+	-webkit-box-shadow:
+		0px 0px 0px rgba(243,132,48,0.5),
+		inset 0px -1px 0px rgba(243,132,48,0.7);
+	box-shadow:
+		0px 0px 0px rgba(243,132,48,0.5),
+		inset 0px -1px 0px rgba(243,132,48,0.7);
+	text-shadow:
+		0px -1px 1px rgba(000,000,000,0.2),
+		0px 1px 0px rgba(255,255,255,0.3);
+}
+
+
 
 /*------------Tasks---------------------*/
 #task_dates{
