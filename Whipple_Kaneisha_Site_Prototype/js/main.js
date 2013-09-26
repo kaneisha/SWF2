@@ -136,7 +136,7 @@ var logout = function() {
 var get_projects = function() {
 	console.log('run');
 
-	var project_item = $(htmlArg).find('#project_item').html();
+	var project_item = $(appTemplate).find('#project_item').html();
 	$.template('projectitem', project_item);
 
 	$.ajax({
