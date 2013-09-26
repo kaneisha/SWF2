@@ -1,6 +1,6 @@
-var user;
-var project;
-var task;
+var user = {};
+var project = {};
+var task = {};
 
 var landingTemplate;
 var appTemplate;
@@ -186,7 +186,8 @@ var loadApp = function() {
 		$(document).on('click', '#view_tasks', function(e) {
 			//console.log("clicked");
 			var projectid = ($(this).attr("data-id"));
-			//project.id = editProjectID;
+			project.id = projectid;
+			console.log(project.id);
 			e.preventDefault();
 			loadTasks(projectid);
 		});
@@ -404,13 +405,13 @@ var new_task = function(status, taskID) {
 	// 	e.preventDefault();
 	// 	console.log($(this).html());
 	// });
-	console.log(status);
+	console.log("status" + status);
 
 	//var email = $('#register_email').val();
 	$.ajax({
 		url : 'xhr/new_task.php',
 		data : {
-			projectID : taskID,
+			projectID : project.id,
 			taskName : name,
 			taskDescription : descrip,
 			status : status
