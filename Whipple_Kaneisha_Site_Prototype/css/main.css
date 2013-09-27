@@ -188,7 +188,7 @@ a{
 	margin-top: 10px;
 }
 
-.active{
+.Active{
 	color: #69D2E7;
 }
 .delayed{
@@ -197,7 +197,7 @@ a{
 .Urgent{
 	color: #ff0000;
 }
-.complete{
+.Complete{
 	color: #0f0;
 }
 
@@ -260,7 +260,8 @@ aside h3{
 }
 
 #wrapperTwo{
-	width: 100%;
+	width: 900px;
+	float: left;
 }
 
 /*-----------------Add Project-------------------------*/
@@ -571,7 +572,7 @@ ul li{
 }
 
 #task_delete{
-	margin-bottom: 10px;
+	margin-bottom: 100px;
 	margin-left: 8px;
 }
 
@@ -582,6 +583,11 @@ ul li{
 
 #second{
 	color: #f00;
+}
+
+#task_wrapper{
+	width: 900px;
+	float: left;
 }
 
 /*----------------Edit Tasks----------------------*/
@@ -611,6 +617,16 @@ ul li{
 	margin-top: -30px;
 	float: right;
 	margin-right: -180px;
+}
+
+#edit_clickable{
+	margin-left: 0;
+	width: 400px;
+}
+
+#project_clickable{
+	margin-left: 0;
+	width: 400px;
 }
 /*----------------Account info------------------------*/
 #accountinfo{

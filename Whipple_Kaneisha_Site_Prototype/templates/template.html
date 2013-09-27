@@ -83,7 +83,7 @@
 			<aside>
 				<img src="images/add.svg" id="add_icon">
 				<h3>Add Project</h4>
-				<img src="images/account_info.svg" id="account_icon">
+				<img src="images/account_info.svg" data-userid="{{=id}}" id="account_icon">
 				<h3>Account Info</h4>
 				<img src="images/clients.svg">
 				<h3>Clients</h4>
@@ -130,39 +130,39 @@
 			<h1 id="projects">Tasks</h1>
 		</div>
 		
-		<div id="wrapper">
 			<aside>
-				<img src="images/add.svg" id="add_task_icon">
+				<img src="images/add.svg" id="add_task_icon" data-addtaskid="{{=id}}">
 				<h3>Add Task</h3>
 				<img src="images/account_info.svg">
 				<h3>Account Info</h4>
 				<img src="images/clients.svg">
 				<h3>Clients</h4>
 			</aside>
-			
 
-		</div>
+			<div id="task_wrapper">
+
+			</div>
 
 	</script>
 
 	<script type="text/template" id="task_item">
 
-		<div id="project" class="container">
-				<h2 class="{{=status}}">{{=taskName}}</h2>
-				<p id="description_project" class="project_description one-third column"> {{=taskDescription}} </p>
-				<div id="task_dates" class="one-third column">
-					<p class="year">13</p>
-					<p class="date">Sep 19</p>
-					<p class="time">1:00 p.m</p>
-					<br>
-					<p class="location">Full Sail Room FS4A 103</p>
-					<!-- <p class="tasks">View Tasks</p> -->
-				</div>
-				<div id="icons" class="one-third column">
-					<img id="task_delete" src="images/delete.svg" alt="Delete the project">
-					<br>
-					<img id="task_edit" data-taskid="{{=id}}" src="images/edit.svg" alt="Edit the task">
-				</div>
+			<div id="project" class="container">
+					<h2 class="{{=status}}">{{=taskName}}</h2>
+					<p id="description_project" class="project_description one-third column"> {{=taskDescription}} </p>
+					<div id="task_dates" class="one-third column">
+						<p class="year">13</p>
+						<p class="date">Sep 19</p>
+						<p class="time">1:00 p.m</p>
+						<br>
+						<p class="location">Full Sail Room FS4A 103</p>
+						<!-- <p class="tasks">View Tasks</p> -->
+					</div>
+					<div id="icons" class="one-third column">
+						<img id="task_delete" src="images/delete.svg" alt="Delete the project">
+						<br>
+						<img id="task_edit" data-taskid="{{=id}}" src="images/edit.svg" alt="Edit the task">
+					</div>
 			</div>
 
 	</script>
@@ -239,7 +239,7 @@
 			</div>
 		</header>
 		<div>
-			<h1 id="projects">Add Project</h1>
+			<h1 id="projects">Add Task</h1>
 		</div>
 		
 		<div id="wrapper">
@@ -322,6 +322,13 @@
 					<input type="text" id="datepicker" id="edit_task_date" placeholder="Click for date">
 					<input type="text" id="edit_task_time" placeholder="1:00 p.m">
 					<input type="text" id="edit_task_location" placeholder="Full Sail Room FS4A 103">
+					<ul id="project_clickable">
+					<li>Status:</li>
+					<li class="clickable" class="{{=status}}" id="red">Urgent</li>
+					<li class="clickable" class="{{=status}}" id="blue">Active</li>
+					<li class="clickable" class="{{=status}}" id="white">Delayed</li>
+					<li class="clickable" class="{{=status}}" id="green">Complete</li>
+				</ul>
 				</div>
 				<div id="edit_task_icons" class="one-third column">
 					<a href="projects.html"><img id="confirm" src="images/confirm.svg" alt="Save the Changes"></a>
@@ -379,11 +386,62 @@
 					</fieldset>
 				</form>
 	
+				<input type="submit" value="Save Changes" id="savebutton" />
+			</div>
+		</div>
+
+	</script>
+
+	<script type="text/template" id="view_account-template">
+
+		<header>
+			<h1 id="logo"><a href="projects.html">Tache</a></h1>
+			<div id="login">
+				<a href="index.html"><input type="submit" id="logout" value="Logout"></a>
+			</div>
+		</header>
+		<div>
+			<h1 id="projects">Account Info</h1>
+		</div>
+		
+		<div id="wrapper">
+			<aside>
+				<img src="images/add.svg">
+				<h3>Add Project</h4>
+				<img src="images/account_info.svg">
+				<h3>Account Info</h4>
+				<img src="images/clients.svg">
+				<h3>Clients</h4>
+			</aside>
+			<div id="accountinfo">
+				<form>
+					<fieldset>
+						<div id="full_name" class="account">
+							<h2>First Name:</h2><p>{{=first_name}}</p>
+						</div>
+						<div id="email" class="account">
+							<h2>Email:</h2><p>{{=email}}</p>
+						</div>
+						<div id="username" class="account">
+							<h2>Username:</h2><p>student</p>
+						</div>
+						<div id="password" class="account">
+							<label for="project_time">Password:</label>
+							 <input type="text" name="name" id="user_password" placeholder="Enter Password" class="add_input">
+						</div>
+						<div id="retype" class="account">
+							<label for="project_location">Retype Password:</label>
+							<input type="text" name="name" id="user_retype" placeholder="Retype Password" class="add_input">
+						</div>
+					</fieldset>
+				</form>
+	
 				<a href="projects.html"><input type="submit" value="Save Changes" id="savebutton" /></a>
 			</div>
 		</div>
 
 	</script>
+
 
 	<script type="text/template" id="update_task">
 
@@ -409,18 +467,26 @@
 			<div id="project" class="container">
 				<div id="edit_task" class="project_description one-third column">
 					<input type="text" id="edit_task_name"  placeholder="Creative Brief">
-					<textarea rows="8" cols="40" placeholder="Create a summary of the site including wireframes and branding." id="edit_task_description">{{= taskDescription}}</textarea>
+					<textarea rows="8" cols="40" placeholder="Create a summary of the site including wireframes and branding." id="edit_task_description"></textarea>
 				</div>
 				<div id="edit_task_dates" class="one-third column">
 					<input type="text" id="edit_task_date" placeholder="Click for date">
 					<input type="text" id="edit_task_time" placeholder="1:00 p.m">
 					<input type="text" id="edit_task_location" placeholder="Full Sail Room FS4A 103">
+						<ul id="edit_clickable">
+						<li>Status:</li>
+						<li class="clickable" id="red">Urgent</li>
+						<li class="clickable" id="blue">Active</li>
+						<li class="clickable" id="white">Delayed</li>
+						<li class="clickable" id="green">Complete</li>
+					</ul>
 				</div>
 				<div id="edit_task_icons" class="one-third column">
 					<img id="confirm_task" src="images/confirm.svg" alt="Save the Changes">
-					
 				</div>
+
 			</div>
+
 		</div>
 
 	</script>
