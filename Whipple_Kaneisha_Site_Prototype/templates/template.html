@@ -29,6 +29,9 @@
 				<input type="text" name="username_signup" id="register_username" placeholder="Username" class="four columns">
 				<input type="password" name="password_signup" id="register_pwd" placeholder="Password" class="four columns">
 				<input id="register_button" type="submit" value="Join">
+
+				<div id="register_error"></div>
+
 		</div>
 		</section>
 		
@@ -85,7 +88,7 @@
 				<h3>Add Project</h4>
 				<img src="images/account_info.svg" data-userid="{{=id}}" id="account_icon">
 				<h3>Account Info</h4>
-				<img src="images/clients.svg">
+				<img src="images/clients.svg" id="clients_icon">
 				<h3>Clients</h4>
 			</aside>
 		
@@ -110,7 +113,7 @@
 					<a id="view_tasks" data-ID="{{=id}}"><p class="tasks">View Tasks</p></a>
 				</div>
 				<div id="icons" class="one-third column">
-					<img id="delete" src="images/delete.svg" alt="Delete the project">
+					<img id="delete" src="images/delete.svg" name="{{=id}}" alt="Delete the project">
 					<br>
 					<img id="edit" data-projectid="{{=id}}" src="images/edit.svg" alt="Edit the project">
 				</div>
@@ -123,7 +126,7 @@
 		<header>
 			<h1 id="logo"><a href="projects.html">Tache</a></h1>
 			<div id="login">
-				<a href="index.html"><input type="submit" id="logout" value="Logout"></a>
+				<input type="submit" id="logout" value="Logout">
 			</div>
 		</header>
 		<div>
@@ -133,9 +136,9 @@
 			<aside>
 				<img src="images/add.svg" id="add_task_icon" data-addtaskid="{{=id}}">
 				<h3>Add Task</h3>
-				<img src="images/account_info.svg">
+				<img src="images/account_info.svg" data-userid="{{=id}}" id="account_icon">
 				<h3>Account Info</h4>
-				<img src="images/clients.svg">
+				<img src="images/clients.svg" id="clients_icon">
 				<h3>Clients</h4>
 			</aside>
 
@@ -159,7 +162,7 @@
 						<!-- <p class="tasks">View Tasks</p> -->
 					</div>
 					<div id="icons" class="one-third column">
-						<img id="task_delete" src="images/delete.svg" alt="Delete the project">
+						<img id="task_delete" src="images/delete.svg" name="{{=id}}"  alt="Delete the project">
 						<br>
 						<img id="task_edit" data-taskid="{{=id}}" src="images/edit.svg" alt="Edit the task">
 					</div>
@@ -181,11 +184,11 @@
 		
 		<div id="wrapper">
 			<aside>
-				<img src="images/add.svg">
+				<img src="images/add.svg" id="add_icon">
 				<h3>Add Project</h4>
-				<img src="images/account_info.svg">
+				<img src="images/account_info.svg" data-userid="{{=id}}" id="account_icon">
 				<h3>Account Info</h4>
-				<img src="images/clients.svg">
+				<img src="images/clients.svg" id="clients_icon">
 				<h3>Clients</h4>
 			</aside>
 			<div id="addproject">
@@ -246,9 +249,9 @@
 			<aside>
 				<img src="images/add.svg">
 				<h3>Add Project</h4>
-				<img src="images/account_info.svg">
+				<img src="images/account_info.svg" data-userid="{{=id}}" id="account_icon">
 				<h3>Account Info</h4>
-				<img src="images/clients.svg">
+				<img src="images/clients.svg" id="clients_icon">
 				<h3>Clients</h4>
 			</aside>
 		<div id="addtask">
@@ -266,7 +269,7 @@
 							
 							<div id="date" class="add">
 								<label for="project_date">Task Date:</label> 
-								<input type="text" name="name" id="task_date" placeholder="Click for Date" class="add_input">
+								<input type="text" id="datepicker" name="name" id="task_date" placeholder="Click for Date" class="add_input">
 							</div>
 							<div id="time" class="add">
 								<label for="project_time">Task Time:</label>
@@ -308,20 +311,20 @@
 			<aside>
 				<img src="images/add.svg" id="add_icon">
 				<h3>Add Project</h4>
-				<img src="images/account_info.svg">
+				<img src="images/account_info.svg" data-userid="{{=id}}" id="account_icon">
 				<h3>Account Info</h4>
-				<img src="images/clients.svg">
+				<img src="images/clients.svg" id="clients_icon">
 				<h3>Clients</h4>
 			</aside>
 			<div id="project" class="container">
 				<div id="edit_task" class="project_description one-third column">
-					<input type="text" id="edit_task_name"  placeholder="Creative Brief">
+					<input type="text" id="edit_task_name"  placeholder="Project Name">
 					<textarea rows="8" cols="40" placeholder="Create a summary of the site including wireframes and branding." id="edit_task_description"></textarea>
 				</div>
 				<div id="edit_task_dates" class="one-third column">
 					<input type="text" id="datepicker" id="edit_task_date" placeholder="Click for date">
-					<input type="text" id="edit_task_time" placeholder="1:00 p.m">
-					<input type="text" id="edit_task_location" placeholder="Full Sail Room FS4A 103">
+					<input type="text" id="edit_task_time" placeholder="Project Time">
+					<input type="text" id="edit_task_location" placeholder="Project Location">
 					<ul id="project_clickable">
 					<li>Status:</li>
 					<li class="clickable" class="{{=status}}" id="red">Urgent</li>
@@ -353,34 +356,34 @@
 		
 		<div id="wrapper">
 			<aside>
-				<img src="images/add.svg">
+				<img src="images/add.svg" id="add_icon">
 				<h3>Add Project</h4>
-				<img src="images/account_info.svg">
+				<img src="images/account_info.svg" data-userid="{{=id}}" id="account_icon">
 				<h3>Account Info</h4>
-				<img src="images/clients.svg">
+				<img src="images/clients.svg" id="clients_icon">
 				<h3>Clients</h4>
 			</aside>
 			<div id="accountinfo">
 				<form>
 					<fieldset>
 						<div id="full_name" class="account">
-							<label for="project_name">Full Name:</label>
-							 <input type="text" name="name" id="full_name" placeholder="John Doe">
+							<label for="project_name">First Name:</label>
+							 <input type="text" name="name" id="first_name" placeholder="John">
 						</div>
 						<div id="email" class="account">
-							<label for="project_name">Email:</label>
-							 <input type="text" name="name" id="user_email" placeholder="JohnDoe@yahoo.com">
+							<label for="project_name">Last Name:</label>
+							 <input type="text" name="name" id="user_email" placeholder="Doe">
 						</div>
 						<div id="username" class="account">
-							<label for="project_date">Username:</label> 
-							<input type="text" name="name" id="username" placeholder="Enter Username" class="add_input">
+							<label for="project_date">Email:</label> 
+							<input type="text" name="name" id="user_name" placeholder="JohnDoe@yahoo.com" class="add_input">
 						</div>
 						<div id="password" class="account">
-							<label for="project_time">Password:</label>
-							 <input type="text" name="name" id="user_password" placeholder="Enter Password" class="add_input">
+							<label for="project_time">City:</label>
+							 <input type="text" name="name" id="user_password" placeholder="Enter Username" class="add_input">
 						</div>
 						<div id="retype" class="account">
-							<label for="project_location">Retype Password:</label>
+							<label for="project_location">State:</label>
 							<input type="text" name="name" id="user_retype" placeholder="Retype Password" class="add_input">
 						</div>
 					</fieldset>
@@ -406,37 +409,35 @@
 		
 		<div id="wrapper">
 			<aside>
-				<img src="images/add.svg">
+				<img src="images/add.svg" id="add_icon">
 				<h3>Add Project</h4>
-				<img src="images/account_info.svg">
+				<img src="images/account_info.svg" data-userid="{{=id}}" id="account_icon">
 				<h3>Account Info</h4>
-				<img src="images/clients.svg">
+				<img src="images/clients.svg" id="clients_icon">
 				<h3>Clients</h4>
 			</aside>
-			<div id="accountinfo">
+			<div id="accountinfotwo">
 				<form>
 					<fieldset>
 						<div id="full_name" class="account">
 							<h2>First Name:</h2><p>{{=first_name}}</p>
 						</div>
+						<div id="last_name" class="account">
+							<h2>Last Name:</h2><p>{{=last_name}}</p>
+						</div>
 						<div id="email" class="account">
 							<h2>Email:</h2><p>{{=email}}</p>
 						</div>
 						<div id="username" class="account">
-							<h2>Username:</h2><p>student</p>
+							<h2>Username:</h2><p>{{=user_n}}</p>
 						</div>
-						<div id="password" class="account">
-							<label for="project_time">Password:</label>
-							 <input type="text" name="name" id="user_password" placeholder="Enter Password" class="add_input">
-						</div>
-						<div id="retype" class="account">
-							<label for="project_location">Retype Password:</label>
-							<input type="text" name="name" id="user_retype" placeholder="Retype Password" class="add_input">
+						<div id="address" class="account">
+							<h2>City & State:</h2><p>{{=city}}{{=state}}</p>
 						</div>
 					</fieldset>
 				</form>
 	
-				<a href="projects.html"><input type="submit" value="Save Changes" id="savebutton" /></a>
+				<input type="submit" value="Edit Account" id="savebutton" />
 			</div>
 		</div>
 
@@ -448,7 +449,7 @@
 		<header>
 			<h1 id="logo"><a href="projects.html">Tache</a></h1>
 			<div id="login">
-				<a href="index.html"><input type="submit" id="logout" value="Logout"></a>
+				<input type="submit" id="logout" value="Logout">
 			</div>
 		</header>
 		<div>
@@ -457,11 +458,11 @@
 		
 		<div id="wrapper">
 			<aside>
-				<img src="images/add.svg">
+				<img src="images/add.svg" id="add_icon">
 				<h3>Add Project</h4>
-				<img src="images/account_info.svg">
+				<img src="images/account_info.svg" data-userid="{{=id}}" id="account_icon">
 				<h3><Account Info</h4>
-				<img src="images/clients.svg">
+				<img src="images/clients.svg" id="clients_icon">
 				<h3>Clients</h4>
 			</aside>
 			<div id="project" class="container">
@@ -470,9 +471,8 @@
 					<textarea rows="8" cols="40" placeholder="Create a summary of the site including wireframes and branding." id="edit_task_description"></textarea>
 				</div>
 				<div id="edit_task_dates" class="one-third column">
-					<input type="text" id="edit_task_date" placeholder="Click for date">
-					<input type="text" id="edit_task_time" placeholder="1:00 p.m">
-					<input type="text" id="edit_task_location" placeholder="Full Sail Room FS4A 103">
+					<input type="text" id="datepicker" id="edit_task_date" placeholder="Click for date">
+					<input type="text" id="edit_task_time" placeholder=Project Time>
 						<ul id="edit_clickable">
 						<li>Status:</li>
 						<li class="clickable" id="red">Urgent</li>
@@ -487,6 +487,108 @@
 
 			</div>
 
+		</div>
+
+	</script>
+
+
+	<script type="text/template" id="clients-template">
+
+		<header>
+			<h1 id="logo"><a href="projects.html">Tache</a></h1>
+			<div id="login">
+				<a href="index.html"><input type="submit" id="logout" value="Logout"></a>
+			</div>
+		</header>
+		<div>
+			<h1 id="projects">Clients</h1>
+		</div>
+		
+			<aside>
+				<img src="images/add.svg" id="add_icon">
+				<h3>Add Project</h4>
+				<img src="images/account_info.svg" data-userid="{{=id}}" id="account_icon">
+				<h3><Account Info</h3>
+				<img src="images/clients.svg" id="clients_icon">
+				<h3>Clients</h4>
+			</aside>
+
+			<div id="wrapper">
+
+			</div>
+
+	
+	</script>
+
+	<script type="text/template" id="clients-item-template">
+
+			<div class="clientdiv ">
+				<h3 class="client_name">{{=clientName}}</h3>
+				<div class="client_contact">
+					
+					<p id="client_phone"> Phone Number:</p><p>{{=phone}}</p>
+					
+		
+				<div class="clientcontact">
+					<p class="client_address">Address:</p><p>{{=address}}</p>
+					<br>
+					<p class="client_web">Website:</p><p>{{=website}}</p>
+				</div>
+				<div id="clients_icons">
+					<img id="edit_client" data-clientid="{{=id}}" src="images/edit.svg" alt="Edit the client">
+				</div>
+				</div>
+			</div>
+
+
+	</script>
+
+	<script type="text/template" id="edit-clients-template">
+
+		<header>
+			<h1 id="logo"><a href="projects.html">Tache</a></h1>
+			<div id="login">
+				<a href="index.html"><input type="submit" id="logout" value="Logout"></a>
+			</div>
+		</header>
+		<div>
+			<h1 id="projects">Clients</h1>
+		</div>
+		
+		<div id="wrapper">
+			<aside>
+				<img src="images/add.svg" id="add_icon">
+				<h3>Add Project</h4>
+				<img src="images/account_info.svg" data-userid="{{=id}}" id="account_icon">
+				<h3>Account Info</h4>
+				<img src="images/clients.svg" id="clients_icon">
+				<h3>Clients</h4>
+			</aside>
+			<div id="accountinfo">
+				<form>
+					<fieldset>
+						<div id="full_name" class="account">
+							<label for="project_name">Client Name:</label>
+							 <input type="text" name="name" id="client_name" placeholder="John">
+						</div>
+						<div id="email" class="account">
+							<label for="project_name">Phone:</label>
+							 <input type="text" name="name" id="client_phone" placeholder="Doe">
+						</div>
+						<div id="username" class="account">
+							<label for="project_date">Address:</label> 
+							<input type="text" name="name" id="client_address" placeholder="JohnDoe@yahoo.com" class="add_input">
+						</div>
+						<div id="password" class="account">
+							<label for="project_time">Website:</label>
+							 <input type="text" name="name" id="client_website" placeholder="Enter Username" class="add_input">
+						</div>
+		
+					</fieldset>
+				</form>
+	
+				<input type="submit" value="Save Changes" id="savebutton" />
+			</div>
 		</div>
 
 	</script>

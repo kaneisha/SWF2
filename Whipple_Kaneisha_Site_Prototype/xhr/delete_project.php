@@ -31,13 +31,12 @@ for($i=0; $i<count($tasks); $i++){
 	array_push($taskArr, $tasks[$i]->id);
 }
 
-$arr = implode(", ", $taskArr);
-
 try{
 	$ct = 0;
-	$sql = "DELETE FROM tasks WHERE id IN (".$arr.")";
+	$sql = "DELETE FROM projects WHERE id = :projectID";
 	
 	$st = $db->prepare($sql);
+	$st->bindParam(":projectID", $projectID);
 	
 	$st->execute();
 	
@@ -47,12 +46,14 @@ try{
 
 try{
 	$ct = 0;
-	$sql = "DELETE FROM projects WHERE id = :projectID";
-	
-	$st = $db->prepare($sql);
-	$st->bindParam(":projectID", $projectID);
-	
-	$st->execute();
+
+	//$sql = "DELETE FROM tasks WHERE id IN (".$arr.")";
+
+	foreach ($taskArr as $taskID) {
+		$sql = "DELETE FROM tasks WHERE id = " . $taskID;
+		$st = $db->prepare($sql);
+		$st->execute();
+	}
 	
 }catch (PDOException $e){
 	errormsg($e->getMessage());

@@ -109,6 +109,7 @@ var register = function() {
 				loadApp();
 			} else {
 				console.log('register unsuccessful');
+				$('#register_error').html('*Please input the correct information in all fields');
 				//loadLanding();
 			}
 		}
@@ -147,6 +148,8 @@ var get_projects = function() {
 				var projects = response.projects;
 				var html = $.render(projects, 'projectitem');
 				$('#wrapperTwo').append(html);
+				if(date){
+
 
 				var yearHTML = $('.year');
 				var timeHTML = $('.time');
@@ -156,7 +159,7 @@ var get_projects = function() {
 					for(var i = 0; i < response.projects.length; i++){
 						var date = response.projects[i].startDate;
 						var dueDate = date.split(" ");
-						
+						console.log(dueDate);
 
 						var month = dueDate[2] + " " + dueDate[1];
 						
@@ -170,7 +173,7 @@ var get_projects = function() {
 						// $(year[i]).html(year);
 						// $(date[i]).html(date);
 					}
-
+					}
 
 
 			} else {
@@ -206,6 +209,13 @@ var loadApp = function(id) {
 			logout();
 		});
 
+		$(document).on('click', '#delete', function(e){
+			e.preventDefault();
+			console.log('deleted');
+			id = e.target.name;
+			deleteProject(id);
+		})
+
 		$(document).on('click', '#view_tasks', function(e) {
 			//console.log("clicked");
 			var projectid = ($(this).attr("data-id"));
@@ -239,11 +249,54 @@ var loadApp = function(id) {
 
 		});
 
+		$(document).on('click', '#clients_icon', function(e) {
+			e.preventDefault();
+			// var userid = ($(this).attr("data-userid", id));
+			// user.id = userid
+			// console.log(userid);
+			// console.log(id);
+			loadClients();
+
+		});
+
 		get_projects();
 
 	});
 
 };
+
+//--------------------------------------------Delete Function--------------------------------------------//
+var deleteProject = function(id){
+	$.ajax({
+		url: 'xhr/delete_project.php',
+		type: 'post',
+		data: {
+			projectID: id
+		},
+		dataType: 'json',
+		success : function(response){
+			console.log(response);
+			loadApp();
+		}
+	})
+}
+
+
+var deleteTask = function(projectid,id){
+	$.ajax({
+		url: 'xhr/delete_task.php',
+		type: 'post',
+		data: {
+			projectID: projectid,
+			taskID: id
+		},
+		dataType: 'json',
+		success : function(response){
+			console.log(response);
+			loadApp();
+		}
+	})
+}
 
 //--------------------------------------------Tasks Page--------------------------------------------//
 
@@ -269,6 +322,32 @@ var get_tasks = function(editProjectID) {
 				var tasks = response.tasks;
 				var html = $.render(tasks, 'taskitem');
 
+				if(date){
+
+
+
+				var yearHTML = $('.year');
+				var timeHTML = $('.time');
+				var dateHTML = $('.date');
+
+					for(var i = 0; i < response.tasks.length; i++){
+						var date = response.tasks[i].startDate;
+						var dueDate = date.split(" ");
+						console.log(dueDate);
+
+						var month = dueDate[2] + " " + dueDate[1];
+						
+
+						var yearsplit = dueDate[3].split("");
+				
+
+						var year = yearsplit[2] + yearsplit[3];
+						$(dateHTML[i]).html(month);
+						$(yearHTML[i]).html(year);
+						// $(year[i]).html(year);
+						// $(date[i]).html(date);
+					}
+					}
 				$('#task_wrapper').append(html);
 			} else {
 				console.log('could not get tasks');
@@ -293,6 +372,14 @@ var loadTasks = function(projectid) {
 		e.preventDefault();
 		logout();
 	});
+
+	$(document).on('click', '#task_delete', function(e){
+			e.preventDefault();
+			console.log('deleted');
+			id = e.target.name; 
+			deleteTask(projectid,id);
+		})
+
 
 	$(document).on('click', '#task_edit', function(e) {
 		e.preventDefault();
@@ -331,7 +418,8 @@ var loadAddProject = function() {
 	$(function() {
 		$("#datepicker").datepicker({
 			changeMonth : true,
-			changeYear : true
+			changeYear : true,
+			dateFormat : "D d M yy"
 		});
 	});
 
@@ -349,6 +437,12 @@ var loadAddProject = function() {
 		e.preventDefault();
 		logout();
 	});
+
+		$('#add_icon').on('click', function(e) {
+			//console.log("clicked");
+			e.preventDefault();
+			loadAddProject();
+		});
 
 };
 
@@ -407,7 +501,8 @@ var loadAddTask = function(taskID) {
 	$(function() {
 		$("#datepicker").datepicker({
 			changeMonth : true,
-			changeYear : true
+			changeYear : true,
+			dateFormat : "D d M yy"
 		});
 	});
 
@@ -479,7 +574,8 @@ var loadEditProject = function(editProjectID) {
 	$(function() {
 		$("#datepicker").datepicker({
 			changeMonth : true,
-			changeYear : true
+			changeYear : true,
+			dateFormat : "D d M yy"
 		});
 	});
 
@@ -489,6 +585,12 @@ var loadEditProject = function(editProjectID) {
 		status = $(this).html();
 		console.log(status);
 	});
+
+		$('#add_icon').on('click', function(e) {
+			//console.log("clicked");
+			e.preventDefault();
+			loadAddProject();
+		});
 
 	$('#logout').on('click', function(e) {
 		//console.log('clicker');
@@ -521,6 +623,7 @@ var loadEditProject = function(editProjectID) {
 
 				$("#edit_task_name").val(project.projectName);
 				$("#edit_task_description").val(project.projectDescription);
+				$('#datepicker').val(project.startDate);
 
 			} else {
 				console.log('could not update project');
@@ -559,7 +662,7 @@ var update_project = function(editProjectID,status) {
 			projectID : editProjectID,
 			projectName : name,
 			projectDescription : descrip,
-			updatedDate : date,
+			startDate : date,
 			status: status
 		},
 		type : 'post',
@@ -602,7 +705,7 @@ var loadViewAccount = function(userid) {
 		logout();
 	});
 
-	$('#add_icon').on('click', function(e) {
+	$(document).on('click','#add_icon', function(e) {
 		//console.log("clicked");
 		e.preventDefault();
 		loadAddProject();
@@ -610,7 +713,7 @@ var loadViewAccount = function(userid) {
 
 	$('#savebutton').on('click', function(e) {
 		e.preventDefault();
-		edit_account(userid);
+		loadAccount(userid);
 		//loadApp;
 	});
 
@@ -640,11 +743,17 @@ var get_view_account = function(userid) {
 
 			if (response) {
 				//loadApp();
-				var info = response.user;
-				var html = $.render(info, 'viewsaccounttemplate');
-				console.log(info);
+				// var info = response.user;
+				// var html = $.render(info, 'viewsaccounttemplate');
+				// console.log(info);
 
-				$('#wrapper').append(html);
+				// $('#wrapper').append(html);
+
+				$('#full_name p').append(response.user.first_name);
+				$('#last_name p').append(response.user.last_name);
+				$('#email p').append(response.user.email);
+				$('#username p').append(response.user.user_n);
+				$('#address p').append(response.user.city + "," + response.user.state);
 			} else {
 				console.log('could not get tasks');
 
@@ -682,6 +791,34 @@ var loadAccount = function(userid) {
 		e.preventDefault();
 		edit_account(userid);
 		//loadApp;
+	});
+
+	$.ajax({
+		url : 'xhr/get_user.php',
+		data : {
+			userID : userid
+		},
+		type : 'get',
+		dataType : 'json',
+		success : function(response) {
+			console.log(response);
+
+			if (response) {
+				console.log('response');
+				var user = response.user;
+
+				$("#first_name").val(user.first_name);
+				$("#user_email").val(user.last_name);
+				$("#user_name").val(user.email);
+				$('#user_password').val(user.city);
+				$('#user_retype').val(user.state);
+
+			} else {
+				console.log('could not update project');
+
+			}
+		}
+
 	});
 };
 
@@ -732,6 +869,14 @@ var loadEditTasks = function(editTask) {
 		logout();
 	});
 
+	$(function() {
+		$("#datepicker").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			dateFormat : "D d M yy"
+		});
+	});
+
 	$('.clickable').on('click', function(e) {
 		console.log('status click');
 		e.preventDefault();
@@ -752,12 +897,6 @@ var loadEditTasks = function(editTask) {
 
 	$.ajax({
 		url : 'xhr/get_tasks.php',
-		// data : {
-		// 	taskID : editTask,
-		// 	taskName : name,
-		// 	taskDescription : descrip,
-		// 	status: status
-		// },
 		type : 'get',
 		dataType : 'json',
 		success : function(response) {
@@ -801,14 +940,16 @@ var edit_task = function(editTask,status) {
 
 	var name = $('#edit_task_name').val();
 	var descrip = $('#edit_task_description').val();
-
+	var date = $('#datepicker').val();
+	console.log(date);
 	$.ajax({
 		url : 'xhr/update_task.php',
 		data : {
 			taskID : editTask,
 			taskName : name,
 			taskDescription : descrip,
-			status: status
+			status: status,
+			startDate: date
 		},
 		type : 'post',
 		dataType : 'json',
@@ -816,12 +957,177 @@ var edit_task = function(editTask,status) {
 			if (response) {
 				console.log(response);
 				console.log('edited account');
+
 				//get_projects();
 
 				loadApp();
 
 			} else {
 				console.log('could not update user');
+
+			}
+		}
+		//return false;
+	});
+};
+
+//---------------------------------------Get Clients-------------------------------------//
+var get_clients = function() {
+	console.log('run');
+
+	var clients = $(appTemplate).find('#clients-item-template').html();
+	$.template('clientsitemtemplate', clients);
+
+	
+	$.ajax({
+		url : 'xhr/get_clients.php',
+		// data : {
+		// 	projectID : editProjectID
+		// },
+		type : 'get',
+		dataType : 'json',
+		success : function(response) {
+			console.log(response);
+
+			if (response) {
+
+				 var clientele = response.clients;
+				 var html = $.render(clientele, 'clientsitemtemplate');
+
+				$('#client_phone p').append(response.clients.phone);
+				console.log('it worked')
+				
+
+				 $('#wrapper').append(html);
+			} else {
+				console.log('could not get tasks');
+
+			}
+		}
+		//return false;
+	});
+};
+
+var loadClients = function() {
+	console.log("clients");
+	$('#wrap').empty();
+	var client = $(appTemplate).find('#clients-template').html();
+	$.template('clientstemplate', client);
+
+	var html = $.render('', 'clientstemplate');
+
+	$('#wrap').append(html);
+
+	$('#logout').on('click', function(e) {
+		//console.log('clicker');
+		e.preventDefault();
+		logout();
+	});
+
+		$('#add_icon').on('click', function(e) {
+			//console.log("clicked");
+			e.preventDefault();
+			loadAddProject();
+		});
+
+
+	$(document).on('click', '#edit_client', function(e) {
+		e.preventDefault();
+		var editClient = ($(this).attr("data-clientid"));
+		loadEditClients(editClient);
+	});
+
+	$(document).on('click', '#add_task_icon', function(e) {
+		console.log('clicked');
+		e.preventDefault();
+		var taskID = ($(this).attr("data-addtaskid"));
+		loadAddTask(taskID);
+	});
+	get_clients();
+};
+
+//---------------------------------------Update Clients-------------------------------------//
+var loadEditClients = function(editClient) {
+	$('#wrap').empty();
+	var editclient = $(appTemplate).find('#edit-clients-template').html();
+	$.template('editclients', editclient);
+
+	var html = $.render('', 'editclients');
+
+	$('#wrap').append(html);
+
+	$('#logout').on('click', function(e) {
+		//console.log('clicker');
+		e.preventDefault();
+		logout();
+	});
+
+	$('#add_icon').on('click', function(e) {
+		//console.log("clicked");
+		e.preventDefault();
+		loadAddProject();
+	});
+
+	$('#savebutton').on('click', function(e) {
+		e.preventDefault();
+		edit_clients(editClient);
+		//loadApp;
+	});
+
+	$.ajax({
+		url : 'xhr/get_clients.php',
+		data : {
+			clientID : editClient
+		},
+		type : 'get',
+		dataType : 'json',
+		success : function(response) {
+			console.log(response);
+
+			if (response) {
+				console.log('response');
+
+				var client = response.clients;
+				$("#client_name").val(client[0].clientName);
+				$("#client_phone").val(client[0].phone);
+				$("#client_address").val(client[0].address);
+				$('#client_website').val(client[0].website);
+
+
+			} else {
+				console.log('could not update project');
+
+			}
+		}
+
+	});
+};
+
+var edit_clients = function(editClient) {
+	var name = $('#client_name').val();
+	var phone = $('#client_phone').val();
+	var address = $('#client_address').val();
+	var web = $('#client_website').val();
+	$.ajax({
+		url : 'xhr/update_client.php',
+		data : {
+			clientID : editClient,
+			clientName : name,
+			phone : phone,
+			address : address,
+			website : web
+		},
+		type : 'post',
+		dataType : 'json',
+		success : function(response) {
+			if (response.error) {
+				//console.log(response);
+				console.log('could not update client');
+				//get_projects();
+
+			} else {
+				console.log('client updated');
+				loadApp();
 
 			}
 		}
