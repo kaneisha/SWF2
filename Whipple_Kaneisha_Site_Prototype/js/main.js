@@ -148,7 +148,7 @@ var get_projects = function() {
 				var projects = response.projects;
 				var html = $.render(projects, 'projectitem');
 				$('#wrapperTwo').append(html);
-				if(date){
+				if(!date){
 
 
 				var yearHTML = $('.year');
@@ -742,6 +742,7 @@ var get_view_account = function(userid) {
 			console.log(response);
 
 			if (response) {
+				console.log('success');
 				//loadApp();
 				// var info = response.user;
 				// var html = $.render(info, 'viewsaccounttemplate');
